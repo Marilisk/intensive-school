@@ -10,12 +10,10 @@ export const AuthVisitor: FC = () => {
     const [authState, setAuthState] = useState({ fio: '', phone: '', email: '', })
 
     const handleSubmit = () => {
-
         console.log(authState)
         localStorage.fio = authState.fio
         localStorage.phone = authState.phone
         localStorage.email = authState.email
-
         setAuthState({fio: '', phone: '', email: '',})
         navigate('/testchoice')
 

@@ -3,6 +3,7 @@ import { instance } from "../../api/api";
 import { TestListItemType } from "../../App";
 import c from './Test.module.scss';
 import { useParams } from 'react-router-dom';
+import { LoadingDots } from "../assets/LoadingDots/LoadingDots";
 
 
 interface ITest {
@@ -40,7 +41,7 @@ export const Test: FC<ITest> = ({ testsList }: ITest) => {
     }, [params.id])
 
     if (!questions.length) {
-        return <div>Loading ...</div>
+        return <LoadingDots />
     }
 
     const question = questions.map((item, ind) => {

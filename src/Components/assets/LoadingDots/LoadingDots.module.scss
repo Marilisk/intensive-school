@@ -1,0 +1,50 @@
+$gray-fontcolor: #666666;
+
+
+.loader {
+    font-size: 18px;
+    width: 100%;
+    height: 30px;
+    padding-left: 30px;
+    margin-top: 80px;
+    span {
+        background: $gray-fontcolor;
+        display: inline-block;
+        height: 12px;
+        width: 12px;
+        border-radius: 50%;
+        margin-right: 6px;
+        &:first-child {
+            animation: blink1 1500ms linear infinite;
+        }
+        &:nth-child(2) {
+            animation: blink2 1500ms linear infinite;
+        }
+        &:nth-child(3) {
+            animation: blink3 1500ms linear infinite;
+        }
+    }    
+}
+
+@keyframes blink3 {
+    0% {opacity: 0;}
+    50% {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+
+@keyframes blink2 {
+    0% {opacity: .3;}
+    35% {opacity: 1;}
+    75% {opacity: 0;}
+    100% {opacity: .3;}
+}
+
+@keyframes blink1 {
+    0% {opacity: .8;}
+    15% {opacity: 1;}
+    60% {opacity: 0;}
+    100% {opacity: .8;}
+}
+
+
