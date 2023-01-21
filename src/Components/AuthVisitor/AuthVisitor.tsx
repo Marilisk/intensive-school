@@ -1,16 +1,10 @@
 import { FC, useState } from "react";
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
-
 import c from './AuthVisitor.module.scss';
 
-interface IAuthVisitor {
-
-}
 
 
-export const AuthVisitor: FC = ({ }: IAuthVisitor) => {
+export const AuthVisitor: FC = () => {
     const navigate = useNavigate();
 
     const [authState, setAuthState] = useState({ fio: '', phone: '', email: '', })
