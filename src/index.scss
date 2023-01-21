@@ -1,0 +1,46 @@
+* {
+  box-sizing: border-box;
+  max-width: 100vw;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  color: #333333;
+  font-family: 'Mulish', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 20px;
+  overflow-x: hidden;
+  min-width: 100vw;
+  line-height: 1.36;
+}
+
+a {
+  text-decoration: none;
+  color: #333333;
+}
+
+section {
+  margin: 0 auto;
+  max-width: 1440px;
+}
+
+input,
+button {
+  font-family: 'Mulish', sans-serif;
+}
+
+button {
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+}
+
+h1,
+h2 {
+  font-size: 18px;
+  font-weight: 400;
+}

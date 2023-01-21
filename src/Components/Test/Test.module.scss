@@ -1,0 +1,41 @@
+.wrap {
+    width: 100%;
+    rgin: 0 auto;
+
+}
+
+
+.question {
+    font-size: 14px;
+
+    p {
+        padding: 5px 0;
+    }
+
+
+    span {
+        font-weight: 600;
+        display: block;
+        padding: 5px 0;
+
+    }
+}
+
+.answerBlock {
+    //border: 1px solid fuchsia;
+    display: flex;
+    margin-top: 12px;
+
+    span {
+        //border: 1px solid rebeccapurple;
+        padding: 0 10px;
+        margin-right: 30px;
+    }
+
+}
+
+.variant {
+    //border: 1px solid black;
+    padding: 5px 0;
+    //display: block;
+}

@@ -1,0 +1,40 @@
+.wrap {
+    width: 30%;
+    margin: 0 auto;
+}
+
+
+.formRow {
+    width: 100%;
+    display: flex;
+    margin-top: 20px;
+
+    label {
+        flex: 1;
+        //border: 1px solid blue;
+        display: inline-block;
+
+        span {
+            width: 41%;
+            display: inline-block;
+
+        }
+    }
+
+    input,
+    button {
+        padding: .5em;
+        flex: 1;
+        display: inline-block;
+
+    }
+
+    button {
+        background: white;
+    }
+
+    input {
+        flex: 2;
+        width: 58%;
+    }
+}
