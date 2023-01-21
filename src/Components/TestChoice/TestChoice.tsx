@@ -1,8 +1,9 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useCallback } from "react";
 import { instance } from "../../api/api";
 import { TestListItemType } from "../../App";
 import c from './TestChoice.module.scss';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+//import { testHardcoredValues } from "./testsNumbers";
 
 
 interface ITestChoice {
@@ -12,9 +13,9 @@ interface ITestChoice {
 
 
 export const TestChoice: FC<ITestChoice> = ({ setTestsList, testsList }: ITestChoice) => {
+    const navigate = useNavigate()
 
-
-    const fetchTestList = async () => {
+    const memoisedFetchTestList = useCallback(async () => {
         try {
             const response = await instance('')
             console.log(response.data)
@@ -23,10 +24,18 @@ export const TestChoice: FC<ITestChoice> = ({ setTestsList, testsList }: ITestCh
             console.log(error)
             alert('не удалось получить список тестов')
         }
-    }
+    }, [setTestsList] )
 
     useEffect(() => {
-        fetchTestList()
+        //fetchTestList()
+        memoisedFetchTestList()
+        //setTestsList(testHardcoredValues)
+    }, [memoisedFetchTestList])
+
+    useEffect(() => {
+        if (!localStorage.getItem('fio') && !localStorage.getItem('phone') && !localStorage.getItem('email')) {
+            navigate('/')
+        }
     })
 
     if (!testsList.length) {
