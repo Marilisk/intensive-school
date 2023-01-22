@@ -1,18 +1,18 @@
 import { FC, useEffect, useCallback } from "react";
 import { instance } from "../../api/api";
-import { TestListItemType } from "../../App";
 import c from './TestChoice.module.scss';
 import { NavLink, useNavigate } from 'react-router-dom';
-//import { testHardcoredValues } from "./testsNumbers";
-
+import { LoadingDots } from "../assets/LoadingDots/LoadingDots";
+import { TestListItemType } from "../../types";
 
 interface ITestChoice {
     setTestsList: any
     testsList: TestListItemType[]
+    setCurrentTestTitle: (arg: string) => void
 }
 
 
-export const TestChoice: FC<ITestChoice> = ({ setTestsList, testsList }: ITestChoice) => {
+export const TestChoice: FC<ITestChoice> = ({ setTestsList, testsList, setCurrentTestTitle }: ITestChoice) => {
     const navigate = useNavigate()
 
     const memoisedFetchTestList = useCallback(async () => {
@@ -27,9 +27,7 @@ export const TestChoice: FC<ITestChoice> = ({ setTestsList, testsList }: ITestCh
     }, [setTestsList] )
 
     useEffect(() => {
-        //fetchTestList()
         memoisedFetchTestList()
-        //setTestsList(testHardcoredValues)
     }, [memoisedFetchTestList])
 
     useEffect(() => {
@@ -39,14 +37,14 @@ export const TestChoice: FC<ITestChoice> = ({ setTestsList, testsList }: ITestCh
     })
 
     if (!testsList.length) {
-        return <div>Loading ...</div>
+        return <LoadingDots />
     }
 
     const tests = testsList.map((test, i) => {
 
         return <div key={i}>
 
-            <div className={c.row}>
+            <div className={c.row} onClick={() => setCurrentTestTitle(test.title)}>
                 <NavLink to={`/test/${test.id}`}>
                     {test.title}
                 </NavLink>

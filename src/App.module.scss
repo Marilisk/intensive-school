@@ -23,3 +23,19 @@
     width: 84%;
     margin: 0 auto;
 }
+
+
+.footer {
+    width: 100%;
+    background: #F5F5F5;
+    font-size: 14px;
+    height: 40px;
+    border-top: 1px solid #DDDDDD;
+    position: fixed;
+    bottom: 0;
+
+    & > div {
+        width: 92%;
+        margin: 20px auto;
+    }
+}

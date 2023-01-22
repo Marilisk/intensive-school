@@ -4,6 +4,7 @@ $blue: #337AB7;
 .wrap {
     width: 62%;
     margin: 20px auto;
+    min-width: 600px;
 
     h2 {
         font-size: 30px;
@@ -19,7 +20,6 @@ $blue: #337AB7;
     label {
         flex: 1;
         display: inline-block;
-
         span {
             width: 21%;
             display: inline-block;
@@ -44,8 +44,6 @@ $blue: #337AB7;
             border-color: #66AFE9;
             box-shadow: 0px 0px 5px 2px rgb(102 175 233 / 20%);
         }
-
-
     }
 
     button {
@@ -107,8 +105,6 @@ $blue: #337AB7;
             }
         }
     }
-
-
 }
 
 
