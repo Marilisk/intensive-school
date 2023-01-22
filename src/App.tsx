@@ -1,24 +1,41 @@
-import { useState } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import c from './App.module.scss';
 import { Routes, Route, NavLink } from 'react-router-dom';
 import { AuthVisitor } from './Components/AuthVisitor/AuthVisitor';
 import { TestChoice } from './Components/TestChoice/TestChoice';
 import { Test } from './Components/Test/Test';
 import { TestListItemType } from './types';
- 
+import { instance } from './api/api';
+
 
 function App() {
 
   const [authState, setAuthState] = useState({ fio: '', phone: '', email: '', })
   const [testsList, setTestsList] = useState<TestListItemType[]>([])
-  const [currentTestTitle, setCurrentTestTitle] = useState('')
+
+  const memoisedFetchTestList = useCallback(async () => {
+    try {
+      const response = await instance('')
+      console.log(response.data)
+      setTestsList(response.data.testsList)
+    } catch (error) {
+      console.log(error)
+      alert('не удалось получить список тестов')
+    }
+  }, [setTestsList])
+
+  useEffect(() => {
+    memoisedFetchTestList()
+  }, [memoisedFetchTestList])
 
   return <>
     <div className={c.header}>
       <div>
         <h1>Тестирование</h1>
-        <div>
-          <NavLink to={'/'}>Все тесты</NavLink>
+        <div className={c.chooseBtn}>
+          <NavLink to={'/'}>
+            Выбрать тест
+          </NavLink>
         </div>
       </div>
     </div>
@@ -26,14 +43,12 @@ function App() {
     <div className={c.appWrapper}>
       <Routes>
 
-        <Route path='/' element={<AuthVisitor authState={authState} setAuthState={setAuthState} />} />
+        <Route path='/authform' element={<AuthVisitor authState={authState} setAuthState={setAuthState} />} />
 
-        <Route path='/testchoice' element={<TestChoice setTestsList={setTestsList} 
-                                                      testsList={testsList}
-                                                      setCurrentTestTitle={setCurrentTestTitle} />} />
+        <Route path='/' element={<TestChoice testsList={testsList} />} />
 
-        <Route path='/test/:id' element={<Test currentTestTitle={currentTestTitle}
-                                                /* setCurrentTestTitle={setCurrentTestTitle} */ />} />
+        <Route path='/test/:id' element={<Test testsList={testsList} />} />
+
       </Routes>
     </div>
 

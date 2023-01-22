@@ -8,30 +8,31 @@ import { ITest, QuestionItemType } from "../../types";
 import { FinalPage } from "./FinalPage";
 
 
-export const Test: FC<ITest> = ({ currentTestTitle }: ITest) => {
+export const Test: FC<ITest> = ({ testsList }: ITest) => {
     const params = useParams();
+    const [currentTestTitle, setCurrentTestTitle] = useState('')
     const [questions, setQuestions] = useState<QuestionItemType[]>([])
     const [step, increaseStep] = useState<number>(0)
     const [answerScore, setAnswerScore] = useState<number | null>(null) // текущий выбранный ответ
-    const [scoreSum, setScoreSum] = useState<number>(0) // итог, сумма баллов
-    const [final, setIsFinal] = useState<boolean>(false)
-
+    const [scoreSum, setScoreSum] = useState<number>(0) // сумма полученных баллов
+    //const [final, setIsFinal] = useState<boolean>(false)
+    
     const radioChangeHandler = (score: number, e: React.FormEvent) => {
         setAnswerScore(score)
         console.log(score)
     }
-
+    console.log('currentTestTitle ', currentTestTitle)
     const goNext = () => {
         if (answerScore) {
             setScoreSum(scoreSum + answerScore)
             console.log('scoreSum increased')
         }
         setAnswerScore(null)
-        if (step === questions.length - 1) {
-            setIsFinal(true)
+        if (step === questions.length-1) {
             let date = new Date()
-            let month = (date.getMonth()+1) < 10 ?  `0${date.getMonth()+1}` : (date.getMonth()+1)
+            let month = (date.getMonth()+1) < 10 ?  `0${date.getMonth()+1}` : (date.getMonth()+1);
             localStorage.setItem(`${currentTestTitle} пройден`, `${date.getDate()}.${month}.${date.getFullYear()}`)
+                                  
         }
         localStorage.setItem(`${currentTestTitle} шаг`, `${step + 1}`)
         localStorage.setItem(`Баллы, ${currentTestTitle}`, `${scoreSum}`)
@@ -51,8 +52,10 @@ export const Test: FC<ITest> = ({ currentTestTitle }: ITest) => {
     useEffect(() => {
         if (params.id) {
             fetchTest(params.id)
+            const test = testsList.find(el => el.id === Number(params.id))
+            if (test) {setCurrentTestTitle(test.title)}
         }
-    }, [params.id])
+    }, [params.id, testsList])
 
     useEffect(() => {
         let wasStarted = localStorage.getItem(`${currentTestTitle} шаг`)
@@ -60,19 +63,20 @@ export const Test: FC<ITest> = ({ currentTestTitle }: ITest) => {
             increaseStep(Number(wasStarted))
             setScoreSum(Number(localStorage.getItem(`Баллы, ${currentTestTitle}`)))
         }
-        if (step === questions.length - 1) {
-            setIsFinal(true)
-        }
+       /*  if (step === questions.length && questions.length > 0) {
+            setIsFinal(true)           
+        } */
     }, [currentTestTitle, step, questions.length])
 
 
     if (!questions.length) {
         return <LoadingDots />
-    } else if (final) {
+    } else if (step === questions.length ) {
         return <FinalPage scoreSum={scoreSum} 
-                questionsAmount={questions.length}
-                currentTestTitle={currentTestTitle}
-                testId={params.id} />  
+                            questionsAmount={questions.length}
+                            currentTestTitle={currentTestTitle}
+                            testId={params.id}
+                            increaseStep={increaseStep} />  
     }
 
     const currentQuestion = questions[step];

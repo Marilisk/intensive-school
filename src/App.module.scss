@@ -1,3 +1,4 @@
+$blue: #337AB7;
 
 .header {
     width: 100%;
@@ -9,12 +10,24 @@
         display: flex;
         justify-content: space-between;
     }
+}
+
+.chooseBtn {
+    height: 30px;
+    margin-top: 10px;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+
     a {
-        color: unset;
+        color: #3A5698;
         display: block;
-        height: fit-content;
-        padding-top: 14px;
+        padding: 6px 10px;
         font-size: 14px;
+        font-weight: 600;
+    }
+    &:hover {
+        box-shadow: inset 0px 0px 4px 2px rgb(102 175 233 / 20%);
     }
 }
 

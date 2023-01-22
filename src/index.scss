@@ -11,7 +11,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 20px;
-  overflow-x: hidden;
+  overflow: scroll;
   min-width: 100vw;
   line-height: 1.36;
 }

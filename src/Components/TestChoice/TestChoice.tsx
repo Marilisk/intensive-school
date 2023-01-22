@@ -1,21 +1,19 @@
-import { FC, useEffect, useCallback } from "react";
-import { instance } from "../../api/api";
+import { FC, useEffect } from "react";
 import c from './TestChoice.module.scss';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { LoadingDots } from "../assets/LoadingDots/LoadingDots";
 import { TestListItemType } from "../../types";
 
 interface ITestChoice {
-    setTestsList: any
+    //setTestsList: any
     testsList: TestListItemType[]
-    setCurrentTestTitle: (arg: string) => void
+    //setCurrentTestTitle: (arg: string) => void
 }
 
-
-export const TestChoice: FC<ITestChoice> = ({ setTestsList, testsList, setCurrentTestTitle }: ITestChoice) => {
+export const TestChoice: FC<ITestChoice> = ({ /* setTestsList, */ testsList }: ITestChoice) => {
     const navigate = useNavigate()
 
-    const memoisedFetchTestList = useCallback(async () => {
+    /* const memoisedFetchTestList = useCallback(async () => {
         try {
             const response = await instance('')
             console.log(response.data)
@@ -28,11 +26,11 @@ export const TestChoice: FC<ITestChoice> = ({ setTestsList, testsList, setCurren
 
     useEffect(() => {
         memoisedFetchTestList()
-    }, [memoisedFetchTestList])
+    }, [memoisedFetchTestList]) */
 
     useEffect(() => {
-        if (!localStorage.getItem('fio') && !localStorage.getItem('phone') && !localStorage.getItem('email')) {
-            navigate('/')
+        if (!localStorage.getItem('fio') && (!localStorage.getItem('phone') || !localStorage.getItem('email'))) {
+            navigate('/authform')
         }
     })
 
@@ -44,7 +42,7 @@ export const TestChoice: FC<ITestChoice> = ({ setTestsList, testsList, setCurren
 
         return <div key={i}>
 
-            <div className={c.row} onClick={() => setCurrentTestTitle(test.title)}>
+            <div className={c.row} /* onClick={() => setCurrentTestTitle(test.title)} */>
                 <NavLink to={`/test/${test.id}`}>
                     {test.title}
                 </NavLink>

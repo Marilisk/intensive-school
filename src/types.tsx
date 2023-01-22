@@ -15,7 +15,7 @@ export interface IAuthVisitor {
 }
 
 export interface ITest {
-  currentTestTitle: string
+  testsList: TestListItemType[]
 }
 export type AnswerItemType = {
   text: string

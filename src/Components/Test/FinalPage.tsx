@@ -7,24 +7,23 @@ interface IFinalPage {
     questionsAmount: number
     currentTestTitle: string
     testId?: string
+    increaseStep: (arg: number) => void
 }
 
-export const FinalPage: FC<IFinalPage> = ({ scoreSum, questionsAmount, currentTestTitle, testId }: IFinalPage) => {
+export const FinalPage: FC<IFinalPage> = ({ scoreSum, questionsAmount, currentTestTitle, testId, increaseStep }: IFinalPage) => {
     const navigate = useNavigate();
-    const date = localStorage.getItem(`${currentTestTitle} пройден`) || 'неизвестно';
+    const date = localStorage.getItem(`${currentTestTitle} пройден`);
 
     const reStartTest = () => {
         localStorage.removeItem(`${currentTestTitle} шаг`)
+        increaseStep(0)
         navigate(`/test/${testId}`)
     }
 
     return <div className={c.wrap}>
         <h2>
             <div>
-                Поздравляем! Вы успешно прошли тестирование "{currentTestTitle}"
-            </div>
-            <div>
-
+                Поздравляем! Вы успешно прошли {currentTestTitle}
             </div>
         </h2>
 
@@ -33,7 +32,9 @@ export const FinalPage: FC<IFinalPage> = ({ scoreSum, questionsAmount, currentTe
             <p>Результат {scoreSum} из {questionsAmount}</p>
         </div>
 
-        <div onClick={() => reStartTest() }>Пройти заново</div>
+        <div onClick={() => reStartTest() } className={c.restartBtn}>
+            Пройти заново
+        </div>
 
     </div >
 
