@@ -12,7 +12,7 @@ export type TestListItemType = {
 
 export type AuthType = {
   fio: string
-  phone: string
+  phone: string /* | null */
   email: string
 }
  
