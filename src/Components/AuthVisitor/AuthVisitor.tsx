@@ -12,8 +12,8 @@ export const AuthVisitor: FC<IAuthVisitor> = ({ authState, setAuthState }: IAuth
 
     const handleSubmit = () => {
         localStorage.setItem('fio', authState.fio)
-        authState.phone ? localStorage.setItem('phone', authState.phone) : void
-        authState.email ? localStorage.setItem('email', authState.email) : void
+        localStorage.setItem('phone', authState.phone)
+        localStorage.setItem('email', authState.email)
         setAuthState({ fio: '', phone: '', email: '', })
         navigate('/')
     }
@@ -26,7 +26,7 @@ export const AuthVisitor: FC<IAuthVisitor> = ({ authState, setAuthState }: IAuth
     })
 
     let canGo = false;
-    const isFioValidated = Boolean(authState.fio.length > 3);
+    const isFioValidated = Boolean(authState.fio.length > 3)
     const isPhoneValidated =  Boolean(authState.phone.length > 0) &&  !Boolean(authState.phone.includes('_'));
     const isEmailValidated = !Boolean(errors.email) && Boolean(authState.email.length > 0);    
     canGo = isFioValidated && (isPhoneValidated || isEmailValidated) 

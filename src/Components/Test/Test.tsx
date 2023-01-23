@@ -11,19 +11,20 @@ import { FinalPage } from "./FinalPage";
 export const Test: FC<ITest> = ({ testsList }: ITest) => {
     const params = useParams();
     const [currentTestTitle, setCurrentTestTitle] = useState('')
+    const [currentTestId, setCurrentTestId] = useState('')
     const [questions, setQuestions] = useState<QuestionItemType[]>([])
     const [step, increaseStep] = useState<number>(0)
     const [answerScore, setAnswerScore] = useState<number | null>(null) // текущий выбранный ответ
     const [scoreSum, setScoreSum] = useState<number>(0) // сумма полученных баллов
-    
+
+        
     const radioChangeHandler = (score: number, e: React.FormEvent) => {
         setAnswerScore(score)
     }
-    
     const goNext = () => {
         if (answerScore) {
-            setScoreSum(scoreSum + answerScore)
-            console.log('scoreSum increased')
+            setScoreSum(prev => prev + 1 )
+            localStorage.setItem(`Баллы, ${currentTestTitle}`, `${scoreSum + 1}`)
         }
         setAnswerScore(null)
         if (step === questions.length-1) {
@@ -31,7 +32,6 @@ export const Test: FC<ITest> = ({ testsList }: ITest) => {
             localStorage.setItem(`${currentTestTitle} пройден`, `${date}`)                      
         }
         localStorage.setItem(`${currentTestTitle} шаг`, `${step + 1}`)
-        localStorage.setItem(`Баллы, ${currentTestTitle}`, `${scoreSum}`)
         increaseStep(prev => prev + 1)
     }
 
@@ -44,29 +44,41 @@ export const Test: FC<ITest> = ({ testsList }: ITest) => {
             alert('не удалось получить список вопросов')
         }
     }
+    
     useEffect(() => {
         if (params.id) {
             fetchTest(params.id)
             const test = testsList.find(el => el.id === Number(params.id))
-            if (test) {setCurrentTestTitle(test.title)}
+            if (test) {
+                setCurrentTestTitle(test.title)
+                setCurrentTestId(String(test.id))
+            }
         }
     }, [params.id, testsList])
 
     useEffect(() => {
-        let wasStarted = localStorage.getItem(`${currentTestTitle} шаг`)
+        let wasStarted = localStorage.getItem(`Тест ${currentTestId} начат`)
         if (wasStarted) {
-            increaseStep(Number(wasStarted))
+            increaseStep( Number(localStorage.getItem(`${currentTestTitle} шаг`)) || 0)
             setScoreSum(Number(localStorage.getItem(`Баллы, ${currentTestTitle}`)))
+            localStorage.removeItem(`Тест ${currentTestId} начат`)
         }
-    }, [currentTestTitle, step, questions.length])
+    }, [step, questions.length, currentTestId, currentTestTitle])
 
+    useEffect(() => {
+        if ( ! localStorage.getItem(`Тест ${currentTestId} начат`) && currentTestId) {
+            localStorage.setItem(`Тест ${currentTestId} начат`, 'true')
+        }
+    }, [currentTestId])
 
-    if (!questions.length) {
+ 
+    if (!questions.length || !currentTestId ) {
         return <LoadingDots />
     } else if (step === questions.length ) {
         return <FinalPage scoreSum={scoreSum} 
                             questionsAmount={questions.length}
                             currentTestTitle={currentTestTitle}
+                            currentTestId={currentTestId}
                             testId={params.id}
                             increaseStep={increaseStep} />  
     }
