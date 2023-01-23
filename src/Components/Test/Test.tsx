@@ -27,10 +27,8 @@ export const Test: FC<ITest> = ({ testsList }: ITest) => {
         }
         setAnswerScore(null)
         if (step === questions.length-1) {
-            let date = new Date()
-            let month = (date.getMonth()+1) < 10 ?  `0${date.getMonth()+1}` : (date.getMonth()+1);
-            localStorage.setItem(`${currentTestTitle} пройден`, `${date.getDate()}.${month}.${date.getFullYear()}`)
-                                  
+            let date = new Date().toLocaleString('ru')
+            localStorage.setItem(`${currentTestTitle} пройден`, `${date}`)                      
         }
         localStorage.setItem(`${currentTestTitle} шаг`, `${step + 1}`)
         localStorage.setItem(`Баллы, ${currentTestTitle}`, `${scoreSum}`)
