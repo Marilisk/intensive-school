@@ -25,12 +25,11 @@ export const AuthVisitor: FC<IAuthVisitor> = ({ authState, setAuthState }: IAuth
         }
     })
 
-    //const isFioValidated = Boolean(authState.fio.length < 4);
-    const isPhoneValidated = Boolean(authState.phone.includes('_') || Boolean(authState.phone.length < 1));
-    const isEmailValidated = Boolean(errors.email);    
-    const canGo = isPhoneValidated || isEmailValidated 
-    //const canGo = (isFioValidated && Boolean(isEmailValidated && isPhoneValidated))
-
+    let canGo = false;
+    const isFioValidated = Boolean(authState.fio.length > 3);
+    const isPhoneValidated =  Boolean(authState.phone.length > 0) &&  !Boolean(authState.phone.includes('_'));
+    const isEmailValidated = !Boolean(errors.email) && Boolean(authState.email.length > 0);    
+    canGo = isFioValidated && (isPhoneValidated || isEmailValidated) 
 
     return <div className={c.wrap}>
         <form onSubmit={() => handleSubmit()}>
@@ -77,7 +76,7 @@ export const AuthVisitor: FC<IAuthVisitor> = ({ authState, setAuthState }: IAuth
 
             <div className={c.formRow}>
                 <button type="submit"
-                    disabled={canGo} >
+                    disabled={!canGo} >
 
                     <div className={c.firstPart}>Далее</div>
                     <div className={c.imgWrap}>

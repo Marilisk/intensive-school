@@ -86,4 +86,8 @@ $blue: #337AB7;
 .restartBtn {
     color: $blue;
     font-weight: 600;
+    cursor: pointer;
+    &:hover {
+        color: #22527B;
+    }
 }

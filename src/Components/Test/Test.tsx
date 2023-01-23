@@ -15,13 +15,11 @@ export const Test: FC<ITest> = ({ testsList }: ITest) => {
     const [step, increaseStep] = useState<number>(0)
     const [answerScore, setAnswerScore] = useState<number | null>(null) // текущий выбранный ответ
     const [scoreSum, setScoreSum] = useState<number>(0) // сумма полученных баллов
-    //const [final, setIsFinal] = useState<boolean>(false)
     
     const radioChangeHandler = (score: number, e: React.FormEvent) => {
         setAnswerScore(score)
-        console.log(score)
     }
-    console.log('currentTestTitle ', currentTestTitle)
+    
     const goNext = () => {
         if (answerScore) {
             setScoreSum(scoreSum + answerScore)
@@ -42,7 +40,6 @@ export const Test: FC<ITest> = ({ testsList }: ITest) => {
     const fetchTest = async (id: string) => {
         try {
             const response = await instance(`/test/${id}/`);
-            console.log(response)
             setQuestions(response.data.listQuestions)
         } catch (error) {
             console.log(error)
@@ -63,9 +60,6 @@ export const Test: FC<ITest> = ({ testsList }: ITest) => {
             increaseStep(Number(wasStarted))
             setScoreSum(Number(localStorage.getItem(`Баллы, ${currentTestTitle}`)))
         }
-       /*  if (step === questions.length && questions.length > 0) {
-            setIsFinal(true)           
-        } */
     }, [currentTestTitle, step, questions.length])
 
 
@@ -94,9 +88,9 @@ export const Test: FC<ITest> = ({ testsList }: ITest) => {
         </div>
     })
 
-    if (!currentQuestion) {
+    /* if (!currentQuestion) {
         return <div>Конец!</div>
-    }
+    } */
 
     return <div className={c.wrap}>
         <h2>{currentTestTitle}</h2> 

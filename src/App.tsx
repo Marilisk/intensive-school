@@ -16,7 +16,6 @@ function App() {
   const memoisedFetchTestList = useCallback(async () => {
     try {
       const response = await instance('')
-      console.log(response.data)
       setTestsList(response.data.testsList)
     } catch (error) {
       console.log(error)
