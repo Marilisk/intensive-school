@@ -88,10 +88,7 @@ export const Test: FC<ITest> = ({ testsList }: ITest) => {
         </div>
     })
 
-    /* if (!currentQuestion) {
-        return <div>Конец!</div>
-    } */
-
+    
     return <div className={c.wrap}>
         <h2>{currentTestTitle}</h2> 
         <div>

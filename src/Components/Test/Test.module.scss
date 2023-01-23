@@ -71,16 +71,22 @@ $blue: #337AB7;
 .answerBlock {
     display: flex;
     margin-top: 12px;
-
     span {
         padding: 0 10px;
         margin-right: 30px;
+    }
+    & > div {
+        padding-top: 2px;
     }
 
 }
 
 .variant {
     padding-bottom: 5px;
+    input {
+        margin-right: 6px;
+    }
+
 }
 
 .restartBtn {
