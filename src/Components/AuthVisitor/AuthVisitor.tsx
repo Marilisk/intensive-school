@@ -25,8 +25,11 @@ export const AuthVisitor: FC<IAuthVisitor> = ({ authState, setAuthState }: IAuth
         }
     })
 
-    const canGo = Boolean( (authState.fio.length < 3) || (( authState.phone.includes('_') || (authState.phone.length < 1)) && Boolean(errors.email)));
-       
+    const isFioValidated = authState.fio.length < 3;
+    const isPhoneValidated = authState.phone.includes('_') || Boolean(authState.phone.length < 1);
+    const isEmailValidated = Boolean(errors.email);    
+    const canGo = isFioValidated && (isEmailValidated || isPhoneValidated) 
+    
     return <div className={c.wrap}>
         <form onSubmit={() => handleSubmit()}>
 
