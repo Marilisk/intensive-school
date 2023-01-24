@@ -26,6 +26,10 @@ function App() {
   useEffect(() => {
     memoisedFetchTestList()
   }, [memoisedFetchTestList])
+  useEffect( () => {
+    const ref = document.referrer;
+    console.log(ref)
+  }, [])
 
   return <>
     <div className={c.header}>

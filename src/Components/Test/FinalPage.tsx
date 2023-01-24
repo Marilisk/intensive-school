@@ -26,6 +26,23 @@ export const FinalPage: FC<IFinalPage> = ({ scoreSum, questionsAmount, currentTe
         localStorage.removeItem(`Тест ${currentTestId} начат`)
     }, [currentTestId])
 
+    useEffect( () => {
+        const result = JSON.stringify({
+            name: localStorage.getItem('fio'),
+            phone: localStorage.getItem('phone'),
+            email: localStorage.getItem('email'),
+            testId,
+            testTitle: currentTestTitle,
+            scoredPoints: scoreSum,
+        })
+
+        return () => {
+            console.log (result)
+        }
+        
+
+    })
+
     return <div className={c.wrap}>
         <h2>
             <div>
