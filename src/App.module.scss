@@ -40,13 +40,22 @@ $blue: #337AB7;
     width: 100%;
     background: #F5F5F5;
     font-size: 14px;
-    height: 40px;
+    height: 60px;
     border-top: 1px solid #DDDDDD;
+    border-bottom: 1px solid #DDDDDD;
     position: fixed;
     bottom: 0;
 
     & > div {
         width: 92%;
-        margin: 20px auto;
+        margin: 0px auto;
+        margin-top: 26px;
+        overflow: scroll;
+    }
+
+    @media screen and (max-width: 533px) {
+        & > div {
+            margin-top: 18px;
+        }        
     }
 }

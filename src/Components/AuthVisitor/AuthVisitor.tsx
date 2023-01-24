@@ -15,13 +15,13 @@ export const AuthVisitor: FC<IAuthVisitor> = ({ authState, setAuthState }: IAuth
         localStorage.setItem('phone', authState.phone)
         localStorage.setItem('email', authState.email)
         setAuthState({ fio: '', phone: '', email: '', })
-        navigate('/')
+        navigate('/test')
     }
 
     useEffect(() => {
         if (localStorage.getItem('fio') &&
             (localStorage.getItem('phone') || localStorage.getItem('email'))) {
-            navigate('/')
+            navigate('/test')
         }
     })
 

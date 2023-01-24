@@ -13,17 +13,17 @@ interface IFinalPage {
 
 export const FinalPage: FC<IFinalPage> = ({ scoreSum, questionsAmount, currentTestTitle, currentTestId, testId, increaseStep }: IFinalPage) => {
     const navigate = useNavigate();
-    const date = localStorage.getItem(`${currentTestTitle} пройден`);
+    const date = localStorage.getItem(`${currentTestId}finished`);
 
     const reStartTest = () => {
-        localStorage.removeItem(`${currentTestTitle} шаг`)
-        localStorage.removeItem(`Баллы, ${currentTestTitle}`)
+        localStorage.removeItem(`step${currentTestId}`)
+        localStorage.removeItem(`score${currentTestId}`)
         increaseStep(0)
         navigate(`/test/${testId}`)
     }
 
     useEffect( () => {
-        localStorage.removeItem(`Тест ${currentTestId} начат`)
+        localStorage.removeItem(`test${currentTestId}begun`)
     }, [currentTestId])
 
     useEffect( () => {
@@ -33,14 +33,14 @@ export const FinalPage: FC<IFinalPage> = ({ scoreSum, questionsAmount, currentTe
             email: localStorage.getItem('email'),
             testId,
             testTitle: currentTestTitle,
-            scoredPoints: scoreSum,
+            score: scoreSum,
         })
-
         return () => {
-            console.log (result)
-        }
-        
+            console.log (result)   
+            // сюда можно вписать нужный пост запрос для отправки результатов теста куда следует
+            // и мне кажется можно положить в сторадж переменную - типа - отправлен результат
 
+        }
     })
 
     return <div className={c.wrap}>

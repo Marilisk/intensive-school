@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const API_URL = 'https://intensiv.ru/tests-list/';
+export const API_URL = 'https://intensiv.ru/api/tests-list/';
 
 export const instance = axios.create({
     baseURL: API_URL,

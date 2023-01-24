@@ -24,14 +24,14 @@ export const Test: FC<ITest> = ({ testsList }: ITest) => {
     const goNext = () => {
         if (answerScore) {
             setScoreSum(prev => prev + 1 )
-            localStorage.setItem(`Баллы, ${currentTestTitle}`, `${scoreSum + 1}`)
+            localStorage.setItem(`score${currentTestId}`, `${scoreSum + 1}`)
         }
         setAnswerScore(null)
         if (step === questions.length-1) {
             let date = new Date().toLocaleString('ru')
-            localStorage.setItem(`${currentTestTitle} пройден`, `${date}`)                      
+            localStorage.setItem(`${currentTestId}finished`, `${date}`)                      
         }
-        localStorage.setItem(`${currentTestTitle} шаг`, `${step + 1}`)
+        localStorage.setItem(`step${currentTestId}`, `${step + 1}`)
         increaseStep(prev => prev + 1)
     }
 
@@ -57,17 +57,17 @@ export const Test: FC<ITest> = ({ testsList }: ITest) => {
     }, [params.id, testsList])
 
     useEffect(() => {
-        let wasStarted = localStorage.getItem(`Тест ${currentTestId} начат`)
+        let wasStarted = localStorage.getItem(`test${currentTestId}begun`)
         if (wasStarted) {
-            increaseStep( Number(localStorage.getItem(`${currentTestTitle} шаг`)) || 0)
-            setScoreSum(Number(localStorage.getItem(`Баллы, ${currentTestTitle}`)))
-            localStorage.removeItem(`Тест ${currentTestId} начат`)
+            increaseStep( Number(localStorage.getItem(`step${currentTestId}`)) || 0)
+            setScoreSum(Number(localStorage.getItem(`score${currentTestId}`)))
+            localStorage.removeItem(`test${currentTestId}begun`)
         }
-    }, [step, questions.length, currentTestId, currentTestTitle])
+    }, [step, questions.length, currentTestId])
 
     useEffect(() => {
-        if ( ! localStorage.getItem(`Тест ${currentTestId} начат`) && currentTestId) {
-            localStorage.setItem(`Тест ${currentTestId} начат`, 'true')
+        if ( ! localStorage.getItem(`test${currentTestId}begun`) && currentTestId) {
+            localStorage.setItem(`test${currentTestId}begun`, 'true')
         }
     }, [currentTestId])
 

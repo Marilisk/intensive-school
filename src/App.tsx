@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import c from './App.module.scss';
-import { Routes, Route, NavLink } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 import { AuthVisitor } from './Components/AuthVisitor/AuthVisitor';
 import { TestChoice } from './Components/TestChoice/TestChoice';
 import { Test } from './Components/Test/Test';
@@ -36,9 +36,9 @@ function App() {
       <div>
         <h1>Тестирование</h1>
         <div className={c.chooseBtn}>
-          <NavLink to={'/'}>
+          <Link to={'/test'}>
             Выбрать тест
-          </NavLink>
+          </Link>
         </div>
       </div>
     </div>
@@ -46,11 +46,11 @@ function App() {
     <div className={c.appWrapper}>
       <Routes>
 
-        <Route path='/authform' element={<AuthVisitor authState={authState} setAuthState={setAuthState} />} />
+        <Route path='/test/authform' element={<AuthVisitor authState={authState} setAuthState={setAuthState} />} />
 
-        <Route path='/' element={<TestChoice testsList={testsList} />} />
+        <Route path='/test' element={<TestChoice testsList={testsList} />} />
 
-        <Route path='/test/:id' element={<Test testsList={testsList} />} />
+        <Route path='/test/test/:id' element={<Test testsList={testsList} />} />
 
       </Routes>
     </div>
@@ -58,7 +58,9 @@ function App() {
     <div className={c.footer}>
       <div>
         <div>
-          <NavLink to={'/'}>© Образовательный центр «Интенсив», 2000 - 2023</NavLink>
+          <a href='https://intensiv.ru/'>
+            © Образовательный центр «Интенсив», 2000 - 2023
+          </a>
         </div>
       </div>
     </div>

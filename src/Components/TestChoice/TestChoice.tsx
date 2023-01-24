@@ -13,7 +13,7 @@ export const TestChoice: FC<ITestChoice> = ({ testsList }: ITestChoice) => {
 
     useEffect(() => {
         if (!localStorage.getItem('fio') && (!localStorage.getItem('phone') || !localStorage.getItem('email'))) {
-            navigate('/authform')
+            navigate('/test/authform')
         }
     })
 
@@ -25,7 +25,7 @@ export const TestChoice: FC<ITestChoice> = ({ testsList }: ITestChoice) => {
 
         return <div key={i}>
             <div className={c.row} >
-                <Link to={`/test/${test.id}`}>
+                <Link to={`/test/test/${test.id}`}>
                     {test.title}
                 </Link>
             </div>
