@@ -19,7 +19,7 @@ export const FinalPage: FC<IFinalPage> = ({ scoreSum, questionsAmount, currentTe
         localStorage.removeItem(`step${currentTestId}`)
         localStorage.removeItem(`score${currentTestId}`)
         increaseStep(0)
-        navigate(`/test/${testId}`)
+        navigate(`/test/test/${testId}`)
     }
 
     useEffect( () => {

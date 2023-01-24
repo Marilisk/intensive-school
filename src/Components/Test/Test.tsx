@@ -17,7 +17,7 @@ export const Test: FC<ITest> = ({ testsList }: ITest) => {
     const [answerScore, setAnswerScore] = useState<number | null>(null) // текущий выбранный ответ
     const [scoreSum, setScoreSum] = useState<number>(0) // сумма полученных баллов
 
-    //console.log(questions)
+    
     const radioChangeHandler = (score: number, e: React.FormEvent) => {
         setAnswerScore(score)
     }
