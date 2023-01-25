@@ -1,29 +1,28 @@
 import { FC, useEffect } from "react";
 import c from './Test.module.scss';
-import { useNavigate } from 'react-router-dom';
 
 interface IFinalPage {
     scoreSum: number
     questionsAmount: number
     currentTestTitle: string
     currentTestId: string
-    testId?: string
     increaseStep: (arg: number) => void
 }
 
-export const FinalPage: FC<IFinalPage> = ({ scoreSum, questionsAmount, currentTestTitle, currentTestId, testId, increaseStep }: IFinalPage) => {
-    const navigate = useNavigate();
+export const FinalPage: FC<IFinalPage> = ({ scoreSum, questionsAmount, currentTestTitle, currentTestId, increaseStep }: IFinalPage) => {
+    
     const date = localStorage.getItem(`${currentTestId}finished`);
 
     const reStartTest = () => {
         localStorage.removeItem(`step${currentTestId}`)
         localStorage.removeItem(`score${currentTestId}`)
+        localStorage.removeItem(`test${currentTestId}begun`)
         increaseStep(0)
-        navigate(`/test/test/${testId}`)
+        //navigate(`/test/test/${testId}`)
     }
 
     useEffect( () => {
-        localStorage.removeItem(`test${currentTestId}begun`)
+        //localStorage.removeItem(`test${currentTestId}begun`)
     }, [currentTestId])
 
     useEffect( () => {
@@ -31,7 +30,7 @@ export const FinalPage: FC<IFinalPage> = ({ scoreSum, questionsAmount, currentTe
             name: localStorage.getItem('fio'),
             phone: localStorage.getItem('phone'),
             email: localStorage.getItem('email'),
-            testId,
+            testId: currentTestId,
             testTitle: currentTestTitle,
             score: scoreSum,
         })

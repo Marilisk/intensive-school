@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import InputMask from 'react-input-mask';
 import c from './AuthVisitor.module.scss';
 import arrow from './../assets/images/arrow.png'
@@ -8,23 +8,15 @@ import { TestChoice } from "../TestChoice/TestChoice";
 
 
 export const AuthVisitor: FC<IAuthVisitor> = ({ authState, setAuthState, testsList, setQuestions, questions }: IAuthVisitor) => {
-    //const navigate = useNavigate()
-
+    
     const handleSubmit = () => {
         localStorage.setItem('fio', authState.fio)
         localStorage.setItem('phone', authState.phone)
         localStorage.setItem('email', authState.email)
         setAuthState({ fio: '', phone: '', email: '', })
-        //navigate('/test')
     }
 
-    useEffect(() => {
-        if (localStorage.getItem('fio') &&
-            (localStorage.getItem('phone') || localStorage.getItem('email'))) {
-            //navigate('/test')
-        }
-    })
-
+    
     let canGo = false;
     const isFioValidated = Boolean(authState.fio.length > 3)
     const isPhoneValidated =  Boolean(authState.phone.length > 0) &&  !Boolean(authState.phone.includes('_'));

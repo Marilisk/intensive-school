@@ -1,7 +1,5 @@
-import React, { FC, useEffect, useState } from "react";
-//import { instance } from "../../api/api";
+import { FC, useEffect, useState } from "react";
 import c from './Test.module.scss';
-import { useParams } from 'react-router-dom';
 import { LoadingDots } from "../assets/LoadingDots/LoadingDots";
 import arrow from './../assets/images/arrow.png'
 import { ITest } from "../../types";
@@ -9,12 +7,11 @@ import { FinalPage } from "./FinalPage";
 
 
 export const Test: FC<ITest> = ({ currentTestTitle, currentTestId, questions }: ITest) => {
-    const params = useParams();
+    
     const [step, increaseStep] = useState<number>(0)
     const [answerScore, setAnswerScore] = useState<number | null>(null) // текущий выбранный ответ
     const [scoreSum, setScoreSum] = useState<number>(0) // сумма полученных баллов
 
-    
     const radioChangeHandler = (score: number) => {
         setAnswerScore(score)
     }
@@ -38,7 +35,6 @@ export const Test: FC<ITest> = ({ currentTestTitle, currentTestId, questions }: 
         if (wasStarted) {
             increaseStep( Number(localStorage.getItem(`step${currentTestId}`)) || 0)
             setScoreSum(Number(localStorage.getItem(`score${currentTestId}`)))
-            localStorage.removeItem(`test${currentTestId}begun`)
         }
     }, [step, questions.length, currentTestId])
 
@@ -56,7 +52,6 @@ export const Test: FC<ITest> = ({ currentTestTitle, currentTestId, questions }: 
                             questionsAmount={questions.length}
                             currentTestTitle={currentTestTitle}
                             currentTestId={String(currentTestId)}
-                            testId={params.id}
                             increaseStep={increaseStep} />  
     }
 
@@ -92,7 +87,7 @@ export const Test: FC<ITest> = ({ currentTestTitle, currentTestId, questions }: 
 
     
     return <div className={c.wrap}>
-        <h2>{currentTestTitle}</h2> 
+        <h2>{currentTestTitle} </h2> 
         <div>
             <p>Вопрос {step + 1} из {questions.length}:</p>
             {currentQuestion.question}

@@ -14,19 +14,10 @@ export function validateEmail(value:string) {
     return error;
 };
 
-/* export function validatePhone(value:string) {
-    let error = '';
-    if (value.length < 6) {
-        error = 'введите номер телефона';
-    } else if ( !value.match(/^[+]{0,1}[ \-()0-9]{7,17}$/) ) {
-        error = 'введите номер телефона в формате 7 777 777 77 77';
-    }
-    return error;
-} */
 
 export function validateFio(value:string) {
     let error = '';
-    if (value.length < 3) {
+    if (value.length < 4) {
         error = 'введите имя длиннее 3 символов';
     } 
     return error;

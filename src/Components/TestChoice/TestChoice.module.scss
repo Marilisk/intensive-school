@@ -1,10 +1,14 @@
 $blue: #337AB7;
 
 .row {
-    width: 100%;
+    width: 40%;
     margin-top: 20px;
+    cursor: pointer;
+    color: $blue;
 
-    a {
-        color: $blue;
+    &:hover {
+        color: #3A5698;
+        transition: 300ms;
     }
+
 }
