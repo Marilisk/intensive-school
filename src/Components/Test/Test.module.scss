@@ -83,9 +83,19 @@ $blue: #337AB7;
 
 .variant {
     padding-bottom: 5px;
+
+    label {
+        display: flex;
+
+    }
     input {
         margin-right: 6px;
         cursor: pointer;
+        display: inline-block;
+    }
+
+    img {
+        height: 44px;
     }
 
 }

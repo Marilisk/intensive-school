@@ -86,7 +86,20 @@ export const Test: FC<ITest> = ({ testsList }: ITest) => {
     const currentQuestion = questions[step];
 
     const answerVariants = currentQuestion.answers.map((variant, i) => {
-        return <div key={i} className={c.variant}>
+
+        if (variant.text.startsWith('/images/')) {
+            return <div key={i} className={c.variant}>
+            <label>
+                <input type='radio'
+                    name={currentQuestion.question}
+                    value={variant.text}
+                    key={`${currentQuestion.question}${i}`}
+                    onChange={(e) => radioChangeHandler(variant.score, e)} />
+                <img alt='' src={`https://intensiv.ru${variant.text}`} />
+            </label>
+        </div>
+        } else {
+            return <div key={i} className={c.variant}>
             <label>
                 <input type='radio'
                     name={currentQuestion.question}
@@ -96,6 +109,8 @@ export const Test: FC<ITest> = ({ testsList }: ITest) => {
                 {variant.text}
             </label>
         </div>
+        }
+        
     })
 
     
