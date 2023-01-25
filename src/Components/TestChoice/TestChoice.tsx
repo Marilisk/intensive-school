@@ -1,21 +1,36 @@
-import { FC, useEffect } from "react";
+import { FC, useState } from "react";
 import c from './TestChoice.module.scss';
-import { Link, useNavigate } from 'react-router-dom';
 import { LoadingDots } from "../assets/LoadingDots/LoadingDots";
-import { TestListItemType } from "../../types";
+import { QuestionItemType, TestListItemType } from "../../types";
+import { Test } from "../Test/Test";
+import { instance } from "../../api/api";
 
 interface ITestChoice {
     testsList: TestListItemType[]
+    questions: QuestionItemType[]
+    setQuestions: (arg: QuestionItemType[]) => void
 }
 
-export const TestChoice: FC<ITestChoice> = ({ testsList }: ITestChoice) => {
-    const navigate = useNavigate()
+export const TestChoice: FC<ITestChoice> = ({ testsList, questions, setQuestions }: ITestChoice) => {
+    const [currentTestTitle, setCurrentTestTitle] = useState('')
+    const [currentTestId, setCurrentTestId] = useState(0)
+    //const [questions, setQuestions] = useState<QuestionItemType[]>([])
 
-    useEffect(() => {
-        if (!localStorage.getItem('fio') && (!localStorage.getItem('phone') || !localStorage.getItem('email'))) {
-            navigate('/test/authform')
+    const fetchTest = async (id: number) => {
+        try {
+            const response = await instance(`/test/${id}/`)
+            setQuestions(response.data.listQuestions)
+        } catch (error) {
+            console.log(error)
+            alert('не удалось получить список вопросов')
         }
-    })
+    }
+    const chooseTest = (id:number, title:string) => {
+        fetchTest(id)
+        setCurrentTestId(id)
+        setCurrentTestTitle(title)
+    }
+
 
     if (!testsList.length) {
         return <LoadingDots />
@@ -24,16 +39,22 @@ export const TestChoice: FC<ITestChoice> = ({ testsList }: ITestChoice) => {
     const tests = testsList.map((test, i) => {
 
         return <div key={i}>
-            <div className={c.row} >
-                <Link to={`/test/test/${test.id}`}>
-                    {test.title}
-                </Link>
+            <div className={c.row} onClick={() => chooseTest(test.id, test.title)} >
+                {test.title}
             </div>
         </div>
     })
 
-    return <div className={c.wrap}>   
-        {tests}
-    </div >
+    if (!questions.length) {
+        return <div className={c.wrap}>
+            {tests}
+        </div >
+    } else {
+        return <Test currentTestTitle={currentTestTitle}
+                     currentTestId={currentTestId}
+                     questions={questions} />
+
+    }
+
 
 }

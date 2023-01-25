@@ -36,7 +36,7 @@ export const FinalPage: FC<IFinalPage> = ({ scoreSum, questionsAmount, currentTe
             score: scoreSum,
         })
         return () => {
-            console.log (result)   
+            console.log ('finalpage unmpunted ', result)   
             if ( ! localStorage.getItem(`result_of_test${currentTestId}send`)) {
                 // сюда можно вписать нужный пост запрос для отправки результатов теста куда следует
 
@@ -44,6 +44,7 @@ export const FinalPage: FC<IFinalPage> = ({ scoreSum, questionsAmount, currentTe
             // и мне кажется можно положить в сторадж переменную - типа - отправлен результат
             localStorage.setItem(`result_of_test${currentTestId}send`, String(date))
 
+        
         }
     })
 

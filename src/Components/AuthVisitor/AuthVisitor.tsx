@@ -1,27 +1,27 @@
 import { FC, useEffect } from "react";
 import InputMask from 'react-input-mask';
-import { useNavigate } from 'react-router-dom';
 import c from './AuthVisitor.module.scss';
 import arrow from './../assets/images/arrow.png'
 import { errors, validateEmail, validateFio } from "./authValidate";
 import { IAuthVisitor } from "../../types";
+import { TestChoice } from "../TestChoice/TestChoice";
 
 
-export const AuthVisitor: FC<IAuthVisitor> = ({ authState, setAuthState }: IAuthVisitor) => {
-    const navigate = useNavigate()
+export const AuthVisitor: FC<IAuthVisitor> = ({ authState, setAuthState, testsList, setQuestions, questions }: IAuthVisitor) => {
+    //const navigate = useNavigate()
 
     const handleSubmit = () => {
         localStorage.setItem('fio', authState.fio)
         localStorage.setItem('phone', authState.phone)
         localStorage.setItem('email', authState.email)
         setAuthState({ fio: '', phone: '', email: '', })
-        navigate('/test')
+        //navigate('/test')
     }
 
     useEffect(() => {
         if (localStorage.getItem('fio') &&
             (localStorage.getItem('phone') || localStorage.getItem('email'))) {
-            navigate('/test')
+            //navigate('/test')
         }
     })
 
@@ -31,7 +31,11 @@ export const AuthVisitor: FC<IAuthVisitor> = ({ authState, setAuthState }: IAuth
     const isEmailValidated = !Boolean(errors.email) && Boolean(authState.email.length > 0);    
     canGo = isFioValidated && (isPhoneValidated || isEmailValidated) 
 
-    return <div className={c.wrap}>
+    if ((localStorage.getItem('fio') &&
+    (localStorage.getItem('phone') || localStorage.getItem('email')))) {
+        return <TestChoice testsList={testsList} setQuestions={setQuestions} questions={questions} />
+    } else {
+        return <div className={c.wrap}>
         <form onSubmit={() => handleSubmit()}>
 
             <h2>Ваши данные:</h2>
@@ -88,5 +92,8 @@ export const AuthVisitor: FC<IAuthVisitor> = ({ authState, setAuthState }: IAuth
 
 
     </div >
+    }
+
+    
 
 }

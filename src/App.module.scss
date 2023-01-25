@@ -4,6 +4,7 @@ $blue: #337AB7;
     width: 100%;
     background: #3A5698;
     color: white;
+
     &>div {
         width: 92%;
         margin: 0 auto;
@@ -18,13 +19,12 @@ $blue: #337AB7;
     background: white;
     border-radius: 4px;
     cursor: pointer;
-    a {
-        color: #3A5698;
-        display: block;
-        padding: 6px 10px;
-        font-size: 14px;
-        font-weight: 600;
-    }
+    color: #3A5698;
+    display: block;
+    padding: 6px 10px;
+    font-size: 14px;
+    font-weight: 600;
+
     &:hover {
         box-shadow: inset 0px 0px 3px 1px rgb(102 175 233 / 50%);
     }
@@ -46,7 +46,7 @@ $blue: #337AB7;
     position: fixed;
     bottom: 0;
 
-    & > div {
+    &>div {
         width: 92%;
         margin: 0px auto;
         margin-top: 26px;
@@ -54,8 +54,8 @@ $blue: #337AB7;
     }
 
     @media screen and (max-width: 533px) {
-        & > div {
+        &>div {
             margin-top: 18px;
-        }        
+        }
     }
 }

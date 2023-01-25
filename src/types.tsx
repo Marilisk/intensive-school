@@ -12,10 +12,15 @@ export type AuthType = {
 export interface IAuthVisitor {
   authState: AuthType
   setAuthState: (arg: AuthType) => void
+  testsList: TestListItemType[]
+  setQuestions: (arg: QuestionItemType[]) => void
+  questions: QuestionItemType[]
 }
 
 export interface ITest {
-  testsList: TestListItemType[]
+  currentTestTitle: string
+  currentTestId: number
+  questions: QuestionItemType[]
 }
 export type AnswerItemType = {
   text: string

@@ -1,24 +1,21 @@
 import React, { FC, useEffect, useState } from "react";
-import { instance } from "../../api/api";
+//import { instance } from "../../api/api";
 import c from './Test.module.scss';
 import { useParams } from 'react-router-dom';
 import { LoadingDots } from "../assets/LoadingDots/LoadingDots";
 import arrow from './../assets/images/arrow.png'
-import { ITest, QuestionItemType } from "../../types";
+import { ITest } from "../../types";
 import { FinalPage } from "./FinalPage";
 
 
-export const Test: FC<ITest> = ({ testsList }: ITest) => {
+export const Test: FC<ITest> = ({ currentTestTitle, currentTestId, questions }: ITest) => {
     const params = useParams();
-    const [currentTestTitle, setCurrentTestTitle] = useState('')
-    const [currentTestId, setCurrentTestId] = useState('')
-    const [questions, setQuestions] = useState<QuestionItemType[]>([])
     const [step, increaseStep] = useState<number>(0)
     const [answerScore, setAnswerScore] = useState<number | null>(null) // текущий выбранный ответ
     const [scoreSum, setScoreSum] = useState<number>(0) // сумма полученных баллов
 
     
-    const radioChangeHandler = (score: number, e: React.FormEvent) => {
+    const radioChangeHandler = (score: number) => {
         setAnswerScore(score)
     }
     const goNext = () => {
@@ -35,27 +32,7 @@ export const Test: FC<ITest> = ({ testsList }: ITest) => {
         increaseStep(prev => prev + 1)
     }
 
-    const fetchTest = async (id: string) => {
-        try {
-            const response = await instance(`/test/${id}/`);
-            setQuestions(response.data.listQuestions)
-        } catch (error) {
-            console.log(error)
-            alert('не удалось получить список вопросов')
-        }
-    }
     
-    useEffect(() => {
-        if (params.id) {
-            fetchTest(params.id)
-            const test = testsList.find(el => el.id === Number(params.id))
-            if (test) {
-                setCurrentTestTitle(test.title)
-                setCurrentTestId(String(test.id))
-            }
-        }
-    }, [params.id, testsList])
-
     useEffect(() => {
         let wasStarted = localStorage.getItem(`test${currentTestId}begun`)
         if (wasStarted) {
@@ -78,7 +55,7 @@ export const Test: FC<ITest> = ({ testsList }: ITest) => {
         return <FinalPage scoreSum={scoreSum} 
                             questionsAmount={questions.length}
                             currentTestTitle={currentTestTitle}
-                            currentTestId={currentTestId}
+                            currentTestId={String(currentTestId)}
                             testId={params.id}
                             increaseStep={increaseStep} />  
     }
@@ -94,7 +71,7 @@ export const Test: FC<ITest> = ({ testsList }: ITest) => {
                     name={currentQuestion.question}
                     value={variant.text}
                     key={`${currentQuestion.question}${i}`}
-                    onChange={(e) => radioChangeHandler(variant.score, e)} />
+                    onChange={() => radioChangeHandler(variant.score)} />
                 <img alt='' src={`https://intensiv.ru${variant.text}`} />
             </label>
         </div>
@@ -105,7 +82,7 @@ export const Test: FC<ITest> = ({ testsList }: ITest) => {
                     name={currentQuestion.question}
                     value={variant.text}
                     key={`${currentQuestion.question}${i}`}
-                    onChange={(e) => radioChangeHandler(variant.score, e)} />
+                    onChange={() => radioChangeHandler(variant.score)} />
                 {variant.text}
             </label>
         </div>

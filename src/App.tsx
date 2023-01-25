@@ -4,7 +4,7 @@ import { Routes, Route, Link } from 'react-router-dom';
 import { AuthVisitor } from './Components/AuthVisitor/AuthVisitor';
 import { TestChoice } from './Components/TestChoice/TestChoice';
 import { Test } from './Components/Test/Test';
-import { TestListItemType } from './types';
+import { QuestionItemType, TestListItemType } from './types';
 import { instance } from './api/api';
 
 
@@ -12,6 +12,8 @@ function App() {
 
   const [authState, setAuthState] = useState({ fio: '', phone: '', email: '', })
   const [testsList, setTestsList] = useState<TestListItemType[]>([])
+  const [questions, setQuestions] = useState<QuestionItemType[]>([])
+
 
   const memoisedFetchTestList = useCallback(async () => {
     try {
@@ -26,25 +28,27 @@ function App() {
   useEffect(() => {
     memoisedFetchTestList()
   }, [memoisedFetchTestList])
-  useEffect( () => {
-    const ref = document.referrer;
-    console.log(ref)
-  }, [])
+  
 
   return <>
     <div className={c.header}>
       <div>
         <h1>Тестирование</h1>
-        <div className={c.chooseBtn}>
-          <Link to={'/test'}>
+        <div className={c.chooseBtn} onClick={() => setQuestions([]) }>
             Выбрать тест
-          </Link>
         </div>
       </div>
     </div>
 
     <div className={c.appWrapper}>
-      <Routes>
+
+    <AuthVisitor authState={authState} 
+                  setAuthState={setAuthState} 
+                  testsList={testsList}
+                  questions={questions}
+                  setQuestions={setQuestions} />
+
+      {/* <Routes>
 
         <Route path='/test/authform' element={<AuthVisitor authState={authState} setAuthState={setAuthState} />} />
 
@@ -52,7 +56,7 @@ function App() {
 
         <Route path='/test/test/:id' element={<Test testsList={testsList} />} />
 
-      </Routes>
+      </Routes> */}
     </div>
 
     <div className={c.footer}>
