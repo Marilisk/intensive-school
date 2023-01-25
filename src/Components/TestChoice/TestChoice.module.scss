@@ -10,5 +10,8 @@ $blue: #337AB7;
         color: #3A5698;
         transition: 300ms;
     }
+    @media screen and (max-width: 768px) {
+        width: 100%;
+    }
 
 }
