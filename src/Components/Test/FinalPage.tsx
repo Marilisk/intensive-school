@@ -32,26 +32,24 @@ export const FinalPage: FC<IFinalPage> = ({ scoreSum, questionsAmount, currentTe
             score: scoreSum,
         })
 
-
-        if (!localStorage.getItem(`result_of_test${currentTestId}send`)) {
-            axios({
-                method: 'post',
-                url: 'https://intensiv.ru/system/testresult.php',
-                headers: {
-                    /* 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36', */
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                data: result
+        axios({
+            method: 'post',
+            url: 'https://intensiv.ru/system/testresult.php',
+            headers: {
+                /* 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36', */
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data: result
+        })
+            .then(function (response) {
+                console.log(response.data);
             })
-                .then(function (response) {
-                    console.log(response.data);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-        }
-        
-        localStorage.setItem(`result_of_test${currentTestId}send`, String(date))
+            .catch(function (error) {
+                console.log(error);
+            });
+
+
+        //localStorage.setItem(`result_of_test${currentTestId}send`, String(date))
 
     })
 
