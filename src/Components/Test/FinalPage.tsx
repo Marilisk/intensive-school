@@ -11,7 +11,7 @@ interface IFinalPage {
 }
 
 export const FinalPage: FC<IFinalPage> = ({ scoreSum, questionsAmount, currentTestTitle, currentTestId, increaseStep }: IFinalPage) => {
-    
+
     const date = localStorage.getItem(`${currentTestId}finished`);
 
     const reStartTest = () => {
@@ -21,8 +21,8 @@ export const FinalPage: FC<IFinalPage> = ({ scoreSum, questionsAmount, currentTe
         increaseStep(0)
     }
 
-    
-    useEffect( () => {
+
+    useEffect(() => {
         const result = JSON.stringify({
             name: localStorage.getItem('fio'),
             phone: localStorage.getItem('phone'),
@@ -31,30 +31,28 @@ export const FinalPage: FC<IFinalPage> = ({ scoreSum, questionsAmount, currentTe
             testTitle: currentTestTitle,
             score: scoreSum,
         })
-        return () => {
-            
-            if ( ! localStorage.getItem(`result_of_test${currentTestId}send`)) {
 
-                axios({
-                    method: 'post',
-                      url: 'https://intensiv.ru/system/testresult.php',
-                      headers: {
+
+        if (!localStorage.getItem(`result_of_test${currentTestId}send`)) {
+            axios({
+                method: 'post',
+                url: 'https://intensiv.ru/system/testresult.php',
+                headers: {
                     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                      },
-                      data : result
-                    })
-                    .then(function (response) {
-                        console.log(JSON.stringify(response.data));
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-
-            }
-            // и мне кажется можно положить в сторадж переменную - типа - отправлен результат
-            localStorage.setItem(`result_of_test${currentTestId}send`, String(date))
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                data: result
+            })
+                .then(function (response) {
+                    console.log(JSON.stringify(response.data));
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         }
+        
+        localStorage.setItem(`result_of_test${currentTestId}send`, String(date))
+
     })
 
     return <div className={c.wrap}>
@@ -69,7 +67,7 @@ export const FinalPage: FC<IFinalPage> = ({ scoreSum, questionsAmount, currentTe
             <p>Результат {scoreSum} из {questionsAmount}</p>
         </div>
 
-        <div onClick={() => reStartTest() } className={c.restartBtn}>
+        <div onClick={() => reStartTest()} className={c.restartBtn}>
             Пройти заново
         </div>
 
