@@ -1,3 +1,4 @@
+import axios from "axios";
 import { FC, useEffect } from "react";
 import c from './Test.module.scss';
 
@@ -18,13 +19,9 @@ export const FinalPage: FC<IFinalPage> = ({ scoreSum, questionsAmount, currentTe
         localStorage.removeItem(`score${currentTestId}`)
         localStorage.removeItem(`test${currentTestId}begun`)
         increaseStep(0)
-        //navigate(`/test/test/${testId}`)
     }
 
-    useEffect( () => {
-        //localStorage.removeItem(`test${currentTestId}begun`)
-    }, [currentTestId])
-
+    
     useEffect( () => {
         const result = JSON.stringify({
             name: localStorage.getItem('fio'),
@@ -35,15 +32,28 @@ export const FinalPage: FC<IFinalPage> = ({ scoreSum, questionsAmount, currentTe
             score: scoreSum,
         })
         return () => {
-            console.log ('finalpage unmpunted ', result)   
+            
             if ( ! localStorage.getItem(`result_of_test${currentTestId}send`)) {
-                // сюда можно вписать нужный пост запрос для отправки результатов теста куда следует
+
+                axios({
+                    method: 'post',
+                      url: 'https://intensiv.ru/system/testresult.php',
+                      headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                      },
+                      data : result
+                    })
+                    .then(function (response) {
+                        console.log(JSON.stringify(response.data));
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
 
             }
             // и мне кажется можно положить в сторадж переменную - типа - отправлен результат
             localStorage.setItem(`result_of_test${currentTestId}send`, String(date))
-
-        
         }
     })
 
