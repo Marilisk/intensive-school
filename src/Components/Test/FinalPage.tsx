@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import c from './Test.module.scss';
 
 interface IFinalPage {
@@ -20,8 +20,13 @@ export const FinalPage: FC<IFinalPage> = ({ scoreSum, questionsAmount, currentTe
         increaseStep(0)
     }
 
+    useEffect( () => {
+        localStorage.removeItem(`test${currentTestId}begun`)
+    })
+
     
     return <div className={c.wrap}>
+        
         <h2>
             <div>
                 Поздравляем! Вы успешно прошли {currentTestTitle}
@@ -37,6 +42,6 @@ export const FinalPage: FC<IFinalPage> = ({ scoreSum, questionsAmount, currentTe
             Пройти заново
         </div>
 
-    </div >
+    </div>
 
 }
