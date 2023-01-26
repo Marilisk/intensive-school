@@ -21,38 +21,7 @@ export const FinalPage: FC<IFinalPage> = ({ scoreSum, questionsAmount, currentTe
         increaseStep(0)
     }
 
-
-    useEffect(() => {
-        const result = JSON.stringify({
-            name: localStorage.getItem('fio'),
-            phone: localStorage.getItem('phone'),
-            email: localStorage.getItem('email'),
-            testId: currentTestId,
-            testTitle: currentTestTitle,
-            score: scoreSum,
-        })
-
-        axios({
-            method: 'post',
-            url: 'https://intensiv.ru/system/testresult.php',
-            headers: {
-                /* 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36', */
-                'Content-Type': 'application/json; charset=utf-8'
-            },
-            data: result
-        })
-            .then(function (response) {
-                console.log(response.data);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-
-
-        //localStorage.setItem(`result_of_test${currentTestId}send`, String(date))
-
-    })
-
+    
     return <div className={c.wrap}>
         <h2>
             <div>

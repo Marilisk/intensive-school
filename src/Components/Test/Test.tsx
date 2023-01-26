@@ -4,6 +4,8 @@ import { LoadingDots } from "../assets/LoadingDots/LoadingDots";
 import arrow from './../assets/images/arrow.png'
 import { ITest } from "../../types";
 import { FinalPage } from "./FinalPage";
+import axios from "axios";
+import qs from 'qs';
 
 
 export const Test: FC<ITest> = ({ currentTestTitle, currentTestId, questions }: ITest) => {
@@ -23,7 +25,33 @@ export const Test: FC<ITest> = ({ currentTestTitle, currentTestId, questions }: 
         setAnswerScore(null)
         if (step === questions.length-1) {
             let date = new Date().toLocaleString('ru')
-            localStorage.setItem(`${currentTestId}finished`, `${date}`)                      
+            localStorage.setItem(`${currentTestId}finished`, `${date}`)   
+            
+            const data = qs.stringify({
+                name: localStorage.getItem('fio'),
+                phone: localStorage.getItem('phone'),
+                email: localStorage.getItem('email'),
+                testId: currentTestId,
+                testTitle: currentTestTitle,
+                score: scoreSum,
+            })
+
+            let config = {
+                method: 'post',
+                url: 'https://intensiv.ru/system/testresult.php',
+                headers: { 
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                data : data
+              };
+               
+              axios(config)
+              .then(function (response) {
+                console.log(JSON.stringify(response.data));
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
         }
         localStorage.setItem(`step${currentTestId}`, `${step + 1}`)
         increaseStep(prev => prev + 1)
