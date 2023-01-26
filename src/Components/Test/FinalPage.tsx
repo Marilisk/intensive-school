@@ -1,5 +1,4 @@
-import axios from "axios";
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import c from './Test.module.scss';
 
 interface IFinalPage {
