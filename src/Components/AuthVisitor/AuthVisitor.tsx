@@ -21,7 +21,7 @@ export const AuthVisitor: FC<IAuthVisitor> = ({ authState, setAuthState, testsLi
     const isFioValidated = Boolean(authState.fio.length > 3)
     const isPhoneValidated =  Boolean(authState.phone.length > 0) &&  !Boolean(authState.phone.includes('_'));
     const isEmailValidated = !Boolean(errors.email) && Boolean(authState.email.length > 0);    
-    canGo = isFioValidated && (isPhoneValidated || isEmailValidated) 
+    canGo = isFioValidated && isPhoneValidated && isEmailValidated 
 
     if ((localStorage.getItem('fio') &&
     (localStorage.getItem('phone') || localStorage.getItem('email')))) {
@@ -49,9 +49,14 @@ export const AuthVisitor: FC<IAuthVisitor> = ({ authState, setAuthState, testsLi
             <div className={c.formRow}>
                 <label>
                     <span>Телефон * :</span>
-                    <InputMask mask='+7 (999) 999 99 99 '
+                    <InputMask mask='+7 (999) 999 99 99'
                         placeholder="телефон"
                         value={authState.phone}
+                        onBlur={() => {
+                            if (authState.phone.includes('_')) {
+                                setAuthState({ ...authState, phone: '' })
+                            }
+                        } }
                         onChange={e => setAuthState({ ...authState, phone: e.target.value })} />
                 </label>
             </div>

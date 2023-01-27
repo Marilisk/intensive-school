@@ -135,3 +135,10 @@ $blue: #337AB7;
         color: #22527B;
     }
 }
+
+.bold {
+    font-weight: 600;
+    a {
+        color: $blue;
+    }
+}
