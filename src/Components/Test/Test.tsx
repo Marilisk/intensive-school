@@ -57,9 +57,9 @@ export const Test: FC<ITest> = ({ currentTestTitle, currentTestId, questions }: 
             var config = {
                 method: 'post',
                 url: 'https://intensiv.ru/testing/form.php',
-                headers: {
+                /* headers: {
                     ...data.getHeaders()
-                },
+                }, */
                 data: data
             };
 
