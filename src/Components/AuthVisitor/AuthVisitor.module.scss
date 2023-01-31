@@ -5,7 +5,11 @@ $blue: #337AB7;
     width: 62%;
     margin: 20px auto;
     min-width: 600px;
-
+    @media (max-width: 656px) {
+        max-width: 100%;
+        min-width: 0;
+        width: 100%;
+    }
     h2 {
         font-size: 30px;
     }
@@ -17,15 +21,28 @@ $blue: #337AB7;
     display: flex;
     margin-top: 20px;
 
+    @media (max-width: 656px) {
+        max-width: 100%;
+    }
+
     label {
         flex: 1;
         display: inline-block;
+
         span {
             width: 21%;
             display: inline-block;
-            //border: 1px solid blue;
             font-size: 14px;
             font-weight: 600;
+        }
+
+        @media (max-width: 656px) {
+            max-width: 100%;
+            justify-content: flex-end;
+
+            span {
+                width: 30%;
+            }
         }
     }
 
@@ -39,6 +56,10 @@ $blue: #337AB7;
         box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
         flex: 2;
         width: 58%;
+
+        @media (max-width: 656px) {
+            width: 70%;
+        }
 
         &:focus {
             border-color: #66AFE9;
@@ -88,7 +109,6 @@ $blue: #337AB7;
 
         &:hover {
             background: #286090;
-
             .imgWrap {
                 background: #22527B;
 
@@ -107,7 +127,6 @@ $blue: #337AB7;
     }
 }
 
-
 .errorMsg {
     font-size: 12px;
     color: red;
@@ -115,3 +134,5 @@ $blue: #337AB7;
     margin-left: 21%;
     margin-top: 10px;
 }
+
+
