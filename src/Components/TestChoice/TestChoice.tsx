@@ -5,16 +5,16 @@ import { QuestionItemType, TestListItemType } from "../../types";
 import { Test } from "../Test/Test";
 import { instance } from "../../api/api";
 
-interface ITestChoice {
+interface ITestChoiceProps {
     testsList: TestListItemType[]
     questions: QuestionItemType[]
     setQuestions: (arg: QuestionItemType[]) => void
+
 }
 
-export const TestChoice: FC<ITestChoice> = ({ testsList, questions, setQuestions }: ITestChoice) => {
+export const TestChoice: FC<ITestChoiceProps> = ({ testsList, questions, setQuestions }: ITestChoiceProps) => {
     const [currentTestTitle, setCurrentTestTitle] = useState('')
     const [currentTestId, setCurrentTestId] = useState(0)
-    //const [questions, setQuestions] = useState<QuestionItemType[]>([])
 
     const fetchTest = async (id: number) => {
         try {
@@ -25,7 +25,7 @@ export const TestChoice: FC<ITestChoice> = ({ testsList, questions, setQuestions
             alert('не удалось получить список вопросов')
         }
     }
-    const chooseTest = (id:number, title:string) => {
+    const chooseTest = (id: number, title: string) => {
         fetchTest(id)
         setCurrentTestId(id)
         setCurrentTestTitle(title)
@@ -51,8 +51,8 @@ export const TestChoice: FC<ITestChoice> = ({ testsList, questions, setQuestions
         </div >
     } else {
         return <Test currentTestTitle={currentTestTitle}
-                     currentTestId={currentTestId}
-                     questions={questions} />
+            currentTestId={currentTestId}
+            questions={questions} />
 
     }
 

@@ -2,14 +2,18 @@ import { FC, useEffect, useState } from "react";
 import c from './Test.module.scss';
 import { LoadingDots } from "../assets/LoadingDots/LoadingDots";
 import arrow from './../assets/images/arrow.png'
-import { ITest } from "../../types";
-import { FinalPage } from "./FinalPage";
+import { QuestionItemType } from "../../types";
 import axios from "axios";
 import FormData from "form-data";
-//import qs from 'qs';
+import { AuthVisitor } from "../AuthVisitor/AuthVisitor";
 
+export interface ITestProps {
+    currentTestTitle: string
+    currentTestId: number
+    questions: QuestionItemType[]
+}
 
-export const Test: FC<ITest> = ({ currentTestTitle, currentTestId, questions }: ITest) => {
+export const Test: FC<ITestProps> = ({ currentTestTitle, currentTestId, questions }: ITestProps) => {
 
     const [step, increaseStep] = useState<number>(0)
     const [answerScore, setAnswerScore] = useState<number | null>(null) // текущий выбранный ответ
@@ -28,28 +32,10 @@ export const Test: FC<ITest> = ({ currentTestTitle, currentTestId, questions }: 
             let date = new Date().toLocaleString('ru')
             localStorage.setItem(`${currentTestId}finished`, `${date}`)
 
-            /* const data = qs.stringify({
-                name: localStorage.getItem('fio'),
-                phone: localStorage.getItem('phone'),
-                email: localStorage.getItem('email'),
-                testId: currentTestId,
-                testTitle: currentTestTitle,
-                score: scoreSum,
-            }) */
-
-            /* let config = {
-                method: 'post',
-                url: 'https://intensiv.ru/system/testresult.php',
-                headers: { 
-                  'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                data : data
-              }; */
-
             let data = new FormData();
-            data.append('user_f_1', localStorage.getItem('phone') || '' );
+            data.append('user_f_1', localStorage.getItem('phone') || '');
             data.append('user_f_2', localStorage.getItem('email') || '');
-            data.append('user_f_3', currentTestTitle); 
+            data.append('user_f_3', currentTestTitle);
             data.append('user_f_4', String(scoreSum));
             data.append('pl_plugin_ident', '756b7e381866fa63122100dd87543d6c');
             data.append('p_title', localStorage.getItem('fio') || '');
@@ -57,9 +43,6 @@ export const Test: FC<ITest> = ({ currentTestTitle, currentTestId, questions }: 
             var config = {
                 method: 'post',
                 url: 'https://intensiv.ru/testing/form.php',
-                /* headers: {
-                    ...data.getHeaders()
-                }, */
                 data: data
             };
 
@@ -94,11 +77,12 @@ export const Test: FC<ITest> = ({ currentTestTitle, currentTestId, questions }: 
     if (!questions.length || !currentTestId) {
         return <LoadingDots />
     } else if (step === questions.length) {
-        return <FinalPage scoreSum={scoreSum}
-            //questionsAmount={questions.length}
+        return <AuthVisitor scoreSum={scoreSum}
             currentTestTitle={currentTestTitle}
             currentTestId={String(currentTestId)}
-            increaseStep={increaseStep} />
+            increaseStep={increaseStep}
+            questions={questions}
+        />
     }
 
     const currentQuestion = questions[step];

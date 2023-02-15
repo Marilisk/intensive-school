@@ -3,7 +3,6 @@ import c from './Test.module.scss';
 
 interface IFinalPage {
     scoreSum: number
-    //questionsAmount: number
     currentTestTitle: string
     currentTestId: string
     increaseStep: (arg: number) => void
