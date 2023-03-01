@@ -8,8 +8,12 @@ $blue: #337AB7;
     &>div {
         width: 92%;
         margin: 0 auto;
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
-        justify-content: space-between;
+        -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+                justify-content: space-between;
     }
 }
 
@@ -26,7 +30,8 @@ $blue: #337AB7;
     font-weight: 600;
 
     &:hover {
-        box-shadow: inset 0px 0px 3px 1px rgb(102 175 233 / 50%);
+        -webkit-box-shadow: inset 0px 0px 3px 1px rgb(102 175 233 / 50%);
+                box-shadow: inset 0px 0px 3px 1px rgb(102 175 233 / 50%);
     }
 }
 

@@ -79,14 +79,13 @@ $blue: #337AB7;
     margin: 20px 0;
     max-width: 100%;
     max-height: 80%;
-
 }
 
 
 .answerBlock {
     display: -webkit-box;
     display: -ms-flexbox;
-    display: -webkit-flex;
+    
     display: flex;
     margin-top: 12px;
 
@@ -98,14 +97,14 @@ $blue: #337AB7;
     &>div {
         padding-top: 2px;
     }
-
-
 }
 
 .variant {
     padding-bottom: 5px;
 
     label {
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
     }
 

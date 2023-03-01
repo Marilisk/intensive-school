@@ -15,15 +15,24 @@ $gray-fontcolor: #666666;
         border-radius: 50%;
         margin-right: 6px;
         &:first-child {
-            animation: blink1 1500ms linear infinite;
+            -webkit-animation: blink1 1500ms linear infinite;
+                    animation: blink1 1500ms linear infinite;
         }
         &:nth-child(2) {
-            animation: blink2 1500ms linear infinite;
+            -webkit-animation: blink2 1500ms linear infinite;
+                    animation: blink2 1500ms linear infinite;
         }
         &:nth-child(3) {
-            animation: blink3 1500ms linear infinite;
+            -webkit-animation: blink3 1500ms linear infinite;
+                    animation: blink3 1500ms linear infinite;
         }
     }    
+}
+
+@-webkit-keyframes blink3 {
+    0% {opacity: 0;}
+    50% {opacity: 1;}
+    100% {opacity: 0;}
 }
 
 @keyframes blink3 {
@@ -32,12 +41,25 @@ $gray-fontcolor: #666666;
     100% {opacity: 0;}
 }
 
+@-webkit-keyframes blink2 {
+    0% {opacity: .3;}
+    35% {opacity: 1;}
+    75% {opacity: 0;}
+    100% {opacity: .3;}
+}
 
 @keyframes blink2 {
     0% {opacity: .3;}
     35% {opacity: 1;}
     75% {opacity: 0;}
     100% {opacity: .3;}
+}
+
+@-webkit-keyframes blink1 {
+    0% {opacity: .8;}
+    15% {opacity: 1;}
+    60% {opacity: 0;}
+    100% {opacity: .8;}
 }
 
 @keyframes blink1 {
