@@ -3,8 +3,6 @@ import c from './Test.module.scss';
 import { LoadingDots } from "../assets/LoadingDots/LoadingDots";
 import arrow from './../assets/images/arrow.png'
 import { QuestionItemType } from "../../types";
-import axios from "axios";
-import FormData from "form-data";
 import { AuthVisitor } from "../AuthVisitor/AuthVisitor";
 
 export interface ITestProps {
@@ -28,7 +26,7 @@ export const Test: FC<ITestProps> = ({ currentTestTitle, currentTestId, question
             localStorage.setItem(`score${currentTestId}`, `${scoreSum + 1}`)
         }
         setAnswerScore(null)
-        if (step === questions.length - 1) {
+        /* if (step === questions.length - 1 && (localStorage.getItem('phone') && localStorage.getItem('email') && localStorage.getItem('fio') ) ) {
             let date = new Date().toLocaleString('ru')
             localStorage.setItem(`${currentTestId}finished`, `${date}`)
 
@@ -53,7 +51,7 @@ export const Test: FC<ITestProps> = ({ currentTestTitle, currentTestId, question
                 .catch(function (error) {
                     console.log(error);
                 });
-        }
+        } */
         localStorage.setItem(`step${currentTestId}`, `${step + 1}`)
         increaseStep(prev => prev + 1)
     }
@@ -112,7 +110,6 @@ export const Test: FC<ITestProps> = ({ currentTestTitle, currentTestId, question
                 </label>
             </div>
         }
-
     })
 
 
