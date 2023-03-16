@@ -26,36 +26,9 @@ export const Test: FC<ITestProps> = ({ currentTestTitle, currentTestId, question
             localStorage.setItem(`score${currentTestId}`, `${scoreSum + 1}`)
         }
         setAnswerScore(null)
-        /* if (step === questions.length - 1 && (localStorage.getItem('phone') && localStorage.getItem('email') && localStorage.getItem('fio') ) ) {
-            let date = new Date().toLocaleString('ru')
-            localStorage.setItem(`${currentTestId}finished`, `${date}`)
-
-            let data = new FormData();
-            data.append('user_f_1', localStorage.getItem('phone') || '');
-            data.append('user_f_2', localStorage.getItem('email') || '');
-            data.append('user_f_3', currentTestTitle);
-            data.append('user_f_4', String(scoreSum));
-            data.append('pl_plugin_ident', '756b7e381866fa63122100dd87543d6c');
-            data.append('p_title', localStorage.getItem('fio') || '');
-
-            var config = {
-                method: 'post',
-                url: 'https://intensiv.ru/testing/form.php',
-                data: data
-            };
-
-            axios(config)
-                .then(function (response) {
-                    console.log(JSON.stringify(response.data));
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-        } */
         localStorage.setItem(`step${currentTestId}`, `${step + 1}`)
         increaseStep(prev => prev + 1)
     }
-
 
     useEffect(() => {
         let wasStarted = localStorage.getItem(`test${currentTestId}begun`)
@@ -116,9 +89,11 @@ export const Test: FC<ITestProps> = ({ currentTestTitle, currentTestId, question
     return <div className={c.wrap}>
         <h2>{currentTestTitle} </h2>
         <div>
+
             <p>Вопрос {step + 1} из {questions.length}:</p>
             {currentQuestion.question}
             {currentQuestion.image && <img alt='' className={c.qImg} src={`https://intensiv.ru${currentQuestion.image}`} />}
+
         </div>
 
         <div className={c.answerBlock}>
